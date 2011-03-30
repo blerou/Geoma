@@ -18,16 +18,11 @@ class PointTest < Test::Unit::TestCase
     new_x = 2
     new_y = 3
 
-    @point.connect(:move) { |x, y|
-      assert_equal new_x, x
-      assert_equal new_y, y
-    }
+    watcher = mock()
+    watcher.expects(:watch_point).once.with(new_x, new_y)
+
+    @point.add_watcher(watcher)
 
     @point.move_to new_x, new_y
-
-    plot = mock()
-    plot.expects(:draw_point).with(new_x, new_y)
-
-    @point.draw(plot)
   end
 end

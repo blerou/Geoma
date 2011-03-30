@@ -4,9 +4,7 @@
 require 'shape'
 
 class Point < Shape
-  attr_reader :x, :y
   def initialize(x, y)
-    super()
     @x = x
     @y = y
   end
@@ -14,10 +12,6 @@ class Point < Shape
   def move_to(x, y)
     @x = x
     @y = y
-    fire(:move, @x, @y)
-  end
-
-  def draw(plot)
-    plot.draw_point @x, @y
+    notify_watchers(:watch_point, @x, @y)
   end
 end

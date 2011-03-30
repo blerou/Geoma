@@ -2,16 +2,29 @@
 # and open the template in the editor.
 
 require 'shape'
+require 'point_watcher'
 
 class Section < Shape
   def initialize(p1, p2)
-    super()
-    @x1 = p1.x
-    @y1 = p1.y
-    @x2 = p2.x
-    @y2 = p2.y
-    p1.connect(:move) { |x, y| @x1 = x; @y1 = y; fire(:length, length) }
-    p2.connect(:move) { |x, y| @x2 = x; @y2 = y; fire(:length, length) }
+    p1.add_watcher(PointWatcher.new(self, :watch_p1))
+    p2.add_watcher(PointWatcher.new(self, :watch_p2))
+  end
+
+  private
+  def watch_p1(x, y)
+    @x1, @y1 = x, y
+    notify
+  end
+
+  def watch_p2(x, y)
+    @x2, @y2 = x, y
+    notify
+  end
+
+  def notify
+    unless @x1.nil? or @x2.nil?
+      notify_watchers(:watch_section, length)
+    end
   end
 
   def length

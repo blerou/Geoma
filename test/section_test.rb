@@ -15,12 +15,12 @@ class SectionTest < Test::Unit::TestCase
     @s  = Section.new(@p1, @p2)
   end
 
-  def test_length
-    assert_equal 2, @s.length
-  end
+  def test_point_moves
+    watcher = mock()
+    watcher.expects(:watch_section).once.with(6.0)
+    @s.add_watcher(watcher)
 
-  def test_moved
-    @p1.move_to 1, 7
-    assert_equal 3, @s.length
+    @p1.move_to 2, 2
+    @p2.move_to 2, 8
   end
 end
