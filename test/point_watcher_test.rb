@@ -8,7 +8,7 @@ require 'mocha'
 require 'point_watcher'
 
 class PointWatcherTest < Test::Unit::TestCase
-  def test_watch
+  def test_watch_point
     new_x, new_y = 1, 2
 
     m = mock()

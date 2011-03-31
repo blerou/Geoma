@@ -3,8 +3,8 @@
 
 require 'watcher'
 
-class PointWatcher < Watcher
-  def watch_point(new_x, new_y)
-    watch(new_x, new_y)
+class SectionWatcher < Watcher
+  def watch_section(length)
+    watch(length)
   end
 end
